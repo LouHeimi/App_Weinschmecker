@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/navigation_suche"
+        android:enabled="true"
+        android:icon="@drawable/suche"
+         />
+    <item
+        android:id="@+id/navigation_scan"
+        android:enabled="true"
+        android:icon="@drawable/scan"
+        android:title="@string/title_scan"
+        />
+    <item
+        android:id="@+id/navigation_weinstyle"
+        android:icon="@drawable/weinstyle"
+        android:enabled="true"
+        android:title="@string/title_weinstyle" />
+
+    <item
+        android:id="@+id/navigation_weinregal"
+        android:enabled="true"
+        android:icon="@drawable/weinregal"
+        android:title="@string/title_weinregal"
+         />
+
+
+
+
+</menu>

@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Weinschmecker</string>
+    <string name="title_suche">suche</string>
+    <string name="title_scan">scanner</string>
+    <string name="title_weinstyle">weinstyle</string>
+    <string name="title_weinregal">weinregal</string>
+    <string name="title_settings">settings</string>
+    <string name="scan">Scan</string>
+
+    <string name="price_format">$%1$s</string>
+    <string name="name_format">Product %1$s</string>
+</resources>

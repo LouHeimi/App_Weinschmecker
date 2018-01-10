@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:layout_marginTop="1dp"
+    android:orientation="vertical"
+    card_view:cardElevation="2dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+
+
+        <ImageView
+            android:id="@+id/weinbild"
+            android:layout_width="44dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="0dp"
+            android:background="@drawable/wein3" />
+
+        <LinearLayout
+            android:layout_width="252dp"
+            android:layout_height="match_parent"
+            android:onClick="openSingleView"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/txt_weinname"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="40dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/txt_jahrgang"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="40dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:textSize="10dp" />
+
+
+            <TextView
+                android:id="@+id/txt_land"
+                android:layout_width="276dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="40dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:textSize="10dp" />
+
+            <TextView
+                android:id="@+id/txt_preis"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="40dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical" />
+
+
+        </LinearLayout>
+
+
+        <ImageButton
+            android:id="@+id/Herz"
+            android:onClick="buttonPressed"
+            android:layout_width="65dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="15dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:cropToPadding="false"
+            android:padding="30dp"
+            android:scaleType="centerCrop"
+            card_view:srcCompat="@drawable/herzleer" />
+
+
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Content Container -->
+
+    <FrameLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginBottom="?android:attr/actionBarSize">
+
+    </FrameLayout>
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/black"
+        app:itemBackground="@android:color/transparent"
+        app:itemIconTint="@color/drawer_item"
+        app:menu="@menu/navigation" >
+
+
+    </android.support.design.widget.BottomNavigationView>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorHellrot"
+        android:minHeight="?attr/actionBarSize">
+
+
+
+    </android.support.v7.widget.Toolbar>
+
+    <ImageButton
+        android:id="@+id/btnSettings"
+        style="@style/Widget.AppCompat.ImageButton"
+        android:layout_width="27dp"
+        android:layout_height="27dp"
+        android:layout_alignBottom="@+id/toolbar"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="11dp"
+        android:layout_marginEnd="18dp"
+        android:background="@drawable/settings"
+        android:onClick="onSelectFragment"
+        android:tint="@android:color/transparent"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="280dp"
+        android:layout_height="200dp"
+        android:layout_alignBottom="@+id/btnSettings"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        app:srcCompat="@drawable/logo_white" />
+
+
+
+</RelativeLayout>
