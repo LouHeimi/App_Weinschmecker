@@ -18,12 +18,12 @@ import com.example.louis.weinschmeckeroffenburg.Fragments.ScanFrag;
 import com.example.louis.weinschmeckeroffenburg.Fragments.SingleWineFrag;
 import com.example.louis.weinschmeckeroffenburg.Fragments.SucheFrag;
 import com.example.louis.weinschmeckeroffenburg.Fragments.WeinregalFrag;
+import com.idescout.sql.SqlScoutServer;
 
 import static com.example.louis.weinschmeckeroffenburg.Fragments.WebViewFragment.mWebView;
 
 
 public class MainActivity extends AppCompatActivity {
-
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-
 
                 case R.id.navigation_suche:
                     SucheFrag sucheFrag = new SucheFrag();
@@ -56,62 +55,31 @@ public class MainActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction().replace(R.id.content, weinregalFrag, weinregalFrag.getTag()).commit();
 
                     return true;
-
             }
-
-
             return false;
         }
-
-
     };
 
-//Herz Button in ListView ändern
-    private boolean paused = false;
-
-    public void buttonPressed(View view) {
-
-        ImageButton button = (ImageButton) view;
-        int icon;
-
-        if (paused) {
-            paused = false;
-            icon = R.drawable.herzleer;
-        }
-        else {
-            paused = true;
-            icon = R.drawable.herz;
-        }
-
-        button.setImageDrawable(
-                ContextCompat.getDrawable(getApplicationContext(), icon));
-
-
-    }
-
-
-
-//Zurück kommen aus Unterseiten der Webview
+    //Zurück kommen aus Unterseiten der Webview
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
             switch (keyCode) {
                 case KeyEvent.KEYCODE_BACK:
-                    if (mWebView.canGoBack()) {
+                    if (mWebView != null && mWebView.canGoBack()) {
                         mWebView.goBack();
                     } else {
                         finish();
                     }
                     return true;
             }
-
         }
         return super.onKeyDown(keyCode, event);
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SqlScoutServer.create(this, getPackageName());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         FragmentManager fm = getSupportFragmentManager();
@@ -121,64 +89,27 @@ public class MainActivity extends AppCompatActivity {
         transaction.add(R.id.content, sucheFrag);
         transaction.commit();
 
-
-
-
-
-
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-
-
-
-
-
         //Slide-Effekt weg
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
-
-
-
-
     }
 
+    public void onSelectFragment(View view) {
+        Fragment newFragment;
 
-    public void openSingleView(View view) {
-
-        SingleWineFrag singleWineFrag = new SingleWineFrag();
-        getSupportFragmentManager().beginTransaction().replace(R.id.content, singleWineFrag, singleWineFrag.getTag()).commit();
-
-    }
-
-
-
-
-        public void onSelectFragment(View view) {
-
-            Fragment newFragment;
-
-            if (view==findViewById(R.id.btnSettings)) {
-                newFragment = new FragmentEinstellungen();
-
-
-            } else {
-                newFragment = new FragmentEinstellungen();
-
-            }
-
-
-            android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.content, newFragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
-
+        if (view == findViewById(R.id.btnSettings)) {
+            newFragment = new FragmentEinstellungen();
+        } else {
+            newFragment = new FragmentEinstellungen();
         }
 
-
-
-
-
-
+        android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.content, newFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 }
 
 

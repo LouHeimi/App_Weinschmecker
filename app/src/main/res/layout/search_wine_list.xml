@@ -4,9 +4,9 @@
     android:layout_height="match_parent">
 
     <SearchView
-        android:id="@+id/search"
+        android:id="@+id/SV_suche"
         android:layout_width="match_parent"
-        android:layout_height="50dp"></SearchView>
+        android:layout_height="50dp"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
@@ -14,8 +14,6 @@
         android:layout_height="match_parent"
         android:clipToPadding="false">
 
-
     </android.support.v7.widget.RecyclerView>
-
 
 </LinearLayout>

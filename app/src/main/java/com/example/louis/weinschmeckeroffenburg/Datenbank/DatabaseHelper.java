@@ -1,111 +1,330 @@
 package com.example.louis.weinschmeckeroffenburg.Datenbank;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Build;
-import android.os.Environment;
-import android.util.Log;
+import android.support.annotation.NonNull;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import com.example.louis.weinschmeckeroffenburg.Datenbank.Item.Item;
+
+import java.util.ArrayList;
 
 /**
  * Created by louis on 21.12.2017.
  */
 
-public class DatabaseHelper  extends SQLiteOpenHelper {
-    private static String DB_NAME = "weinschmecker.sqlite";
-    private static String DB_PATH = "";
+public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private SQLiteDatabase myDatabase;
-    private final Context myContext;
+    // Database name and version
+    private static String DB_NAME = "wineDatabase";
+    private static int DB_VERSION = 1;
 
+    // Table name
+    private static final String WINE_TABLE = "WEIN";
+
+    // Wine Table Columns names
+    private static final String KEY_ID = "ID";
+    private static final String KEY_NAME = "NAME";
+    private static final String KEY_JAHRGANG = "JAHRGANG";
+    private static final String KEY_LAND = "LAND";
+    private static final String KEY_PREIS = "PREIS";
+    private static final String KEY_GESCHMACK = "GESCHMACK";
+    private static final String KEY_ART = "ART";
+    private static final String KEY_LADEN = "LADEN";
+    private static final String KEY_SERVIERVORSCHLAG = "SERVIERVORSCHLAG";
+    private static final String KEY_CONTENT = "CONTENT";
+    private static final String KEY_IMG = "IMG";
+    private static final String KEY_FAVORIT = "FAVORIT";
 
     public DatabaseHelper(Context context) {
-        super(context, DB_NAME, null, 1);
-        if (Build.VERSION.SDK_INT >= 15) {
-            DB_PATH = context.getApplicationInfo().dataDir + "/databases/";
-        } else {
-            DB_PATH = Environment.getDataDirectory() + "/data/" + context.getPackageName() + "/databases/";
-        }
-        this.myContext = context;
+        super(context, DB_NAME, null, DB_VERSION);
+        getWritableDatabase();
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db) {
+    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        String CREATE_WINE_TABLE = "CREATE TABLE " + WINE_TABLE + "("
+                + KEY_ID + " INTEGER PRIMARY KEY,"
+                + KEY_NAME + " TEXT,"
+                + KEY_JAHRGANG + " TEXT,"
+                + KEY_LAND + " TEXT,"
+                + KEY_PREIS + " TEXT,"
+                + KEY_GESCHMACK + " TEXT,"
+                + KEY_ART + " TEXT,"
+                + KEY_LADEN + " TEXT,"
+                + KEY_SERVIERVORSCHLAG + " TEXT,"
+                + KEY_CONTENT + " TEXT,"
+                + KEY_IMG + " TEXT,"
+                + KEY_FAVORIT + " INTEGER" + ")";
 
+        sqLiteDatabase.execSQL(CREATE_WINE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        db.execSQL("DROP TABLE IF EXISTS " + WINE_TABLE);
+        // Create tables again
+        onCreate(db);
     }
 
-    public void checkAndCopyDatabase() {
-        boolean dbExist = checkDatabase();
-        if (dbExist) {
-            Log.d("TAG", "database already exists");
-        } else {
-            this.getReadableDatabase();
+    public void insertWine(Item wine) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // Inserting Row
+        db.insert(WINE_TABLE, null, getContentValuesFromWine(wine));
+        db.close();
+    }
+
+
+    public void updateWine(Item wine) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = getContentValuesFromWine(wine);
+
+        // updating row
+        db.update(WINE_TABLE, values, KEY_ID + " = ?",
+                new String[]{String.valueOf(wine.getId())});
+    }
+
+
+    public Item getWine(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = db.query(WINE_TABLE,
+                getColumns(),
+                KEY_ID + "=?",
+                new String[]{String.valueOf(id)}, null, null, null, null);
+
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        return getWineFromCursor(cursor);
+    }
+
+    public void removeWine(Item wine) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(WINE_TABLE, KEY_ID + " = ?",
+                new String[]{String.valueOf(wine.getId())});
+        db.close();
+    }
+
+    public ArrayList<Item> getAllWineFromDB() {
+        ArrayList<Item> wineList = new ArrayList<>();
+        String selectQuery = "SELECT  * FROM " + WINE_TABLE;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Item wine = getWineFromCursor(cursor);
+                wineList.add(wine);
+            } while (cursor.moveToNext());
         }
-        try {
-copyDatabase();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.d("Tag", "Error");
-
-        }
-    }
-
-    public boolean checkDatabase () {
-        SQLiteDatabase checkDB = null;
-        try {
-            String myPath = DB_PATH + DB_NAME;
-            checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
-        } catch (SQLException e) {
-
-        }
-        if (checkDB != null) {
-            checkDB.close();
+        if(wineList.isEmpty()) {
+            wineList = createWineData();
         }
 
-        return checkDB != null ? true : false;
+        return wineList;
     }
 
-    public void copyDatabase() throws IOException{
-        InputStream myInput = myContext.getAssets().open(DB_NAME);
-        String outFileName = DB_PATH + DB_NAME;
-        OutputStream myOutput = new FileOutputStream(outFileName);
-        byte[] buffer = new byte[1024];
-        int length;
-        while ((length=myInput.read(buffer))>0) {
-            myOutput.write(buffer,0,length);
+    public ArrayList<Item> getAllFavouriteWineFromDB() {
+        ArrayList<Item> wineList = new ArrayList<>();
+        String selectQuery = "SELECT  * FROM " + WINE_TABLE + " WHERE FAVORIT == 1";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Item wine = getWineFromCursor(cursor);
+                wineList.add(wine);
+            } while (cursor.moveToNext());
         }
-        myOutput.flush();
-        myOutput.close();
-        myInput.close();
-    }
-public void openDatabase (){
-        String myPath = DB_PATH + DB_NAME;
-        myDatabase=SQLiteDatabase.openDatabase(myPath,null,SQLiteDatabase.OPEN_READWRITE);
-    }
-    public synchronized void close () {
-        if (myDatabase != null) {
-            myDatabase.close();
-        }
-        super.close();
+
+        return wineList;
     }
 
 
+    // Helper Methods
 
-
-    public Cursor QueryData (String query){
-        return myDatabase.rawQuery(query,null);
+    @NonNull
+    private ContentValues getContentValuesFromWine(Item item) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(KEY_ID, item.getId());
+        contentValues.put(KEY_NAME, item.getWeinname());
+        contentValues.put(KEY_JAHRGANG, item.getJahrgang());
+        contentValues.put(KEY_LAND, item.getLand());
+        contentValues.put(KEY_PREIS, item.getPreis());
+        contentValues.put(KEY_GESCHMACK, item.getGeschmack());
+        contentValues.put(KEY_ART, item.getArt());
+        contentValues.put(KEY_LADEN, item.getLaden());
+        contentValues.put(KEY_SERVIERVORSCHLAG, item.getServierVorschlag());
+        contentValues.put(KEY_CONTENT, item.getContent());
+        contentValues.put(KEY_IMG, item.getImg());
+        contentValues.put(KEY_FAVORIT, item.getIsFavourite());
+        return contentValues;
     }
+
+    @NonNull
+    private Item getWineFromCursor(Cursor cursor) {
+        return new Item(cursor.getString(0),
+                cursor.getString(1),
+                cursor.getString(2),
+                cursor.getString(3),
+                cursor.getString(4),
+                cursor.getString(5),
+                cursor.getString(6),
+                cursor.getString(7),
+                cursor.getString(8),
+                cursor.getString(9),
+                cursor.getString(10),
+                Integer.parseInt(cursor.getString(11))
+        );
+    }
+
+    @NonNull
+    private String[] getColumns() {
+        return new String[]{
+                KEY_ID,
+                KEY_NAME,
+                KEY_JAHRGANG,
+                KEY_LAND,
+                KEY_PREIS,
+                KEY_GESCHMACK,
+                KEY_ART,
+                KEY_LADEN,
+                KEY_SERVIERVORSCHLAG,
+                KEY_CONTENT,
+                KEY_IMG,
+                KEY_FAVORIT};
+    }
+
+    private ArrayList<Item> createWineData() {
+        ArrayList<Item> tmpWineList = new ArrayList<>();
+
+        Item wine0 = new Item("0",
+                "Savignon Blanc",
+                "1990",
+                "Land",
+                "30",
+                "Geschmack",
+                "Art",
+                "Laden",
+                "Serviervorschlag",
+                "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+                "Image Name",
+                0);
+
+        Item wine1 = new Item("1",
+                "Savignon Noir",
+                "1990",
+                "Land",
+                "30",
+                "Geschmack",
+                "Art",
+                "Laden",
+                "Serviervorschlag",
+                "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+                "Image Name",
+                0);
+        Item wine2 = new Item("2",
+                "Savignon Blanc",
+                "1990",
+                "Land",
+                "30",
+                "Geschmack",
+                "Art",
+                "Laden",
+                "Serviervorschlag",
+                "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+                "Image Name",
+                0);
+        Item wine3 = new Item("3",
+                "Savignon Blanc",
+                "1990",
+                "Land",
+                "30",
+                "Geschmack",
+                "Art",
+                "Laden",
+                "Serviervorschlag",
+                "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+                "Image Name",
+                0);
+        Item wine4 = new Item("4",
+                "Savignon Blanc",
+                "1990",
+                "Land",
+                "30",
+                "Geschmack",
+                "Art",
+                "Laden",
+                "Serviervorschlag",
+                "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+                "Image Name",
+                0);
+        Item wine5 = new Item("5",
+                "Savignon Blanc",
+                "1990",
+                "Land",
+                "30",
+                "Geschmack",
+                "Art",
+                "Laden",
+                "Serviervorschlag",
+                "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+                "Image Name",
+                0);
+        Item wine6 = new Item("6",
+                "Savignon Blanc",
+                "1990",
+                "Land",
+                "30",
+                "Geschmack",
+                "Art",
+                "Laden",
+                "Serviervorschlag",
+                "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+                "Image Name",
+                0);
+        Item wine7 = new Item("7",
+                "Savignon Blanc",
+                "1990",
+                "Land",
+                "30",
+                "Geschmack",
+                "Art",
+                "Laden",
+                "Serviervorschlag",
+                "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+                "Image Name",
+                0);
+
+        // Give back the list
+        tmpWineList.add(wine0);
+        tmpWineList.add(wine1);
+        tmpWineList.add(wine2);
+        tmpWineList.add(wine3);
+        tmpWineList.add(wine4);
+        tmpWineList.add(wine5);
+        tmpWineList.add(wine6);
+        tmpWineList.add(wine7);
+
+        // Insert it to database
+        insertWine(wine0);
+        insertWine(wine1);
+        insertWine(wine2);
+        insertWine(wine3);
+        insertWine(wine4);
+        insertWine(wine5);
+        insertWine(wine6);
+        insertWine(wine7);
+
+        return tmpWineList;
+    }
+
 }

@@ -68,13 +68,6 @@ public class ScanFrag extends Fragment implements ZXingScannerView.ResultHandler
 
     }
 
-
-
-
-
-
-
-
     @Override
     public void handleResult(Result rawResult) {
 
@@ -87,12 +80,6 @@ public class ScanFrag extends Fragment implements ZXingScannerView.ResultHandler
         final String result = rawResult.getText();
 
     }
-
-
-
-
-
-
 
     /*@Override
     public void handleResult(Result rawResult) {

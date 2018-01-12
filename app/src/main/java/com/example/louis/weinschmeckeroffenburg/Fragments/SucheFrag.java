@@ -1,8 +1,6 @@
 package com.example.louis.weinschmeckeroffenburg.Fragments;
 
 
-import android.database.Cursor;
-import android.database.SQLException;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,12 +8,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.louis.weinschmeckeroffenburg.Datenbank.DatabaseHelper;
 import com.example.louis.weinschmeckeroffenburg.Datenbank.Item.Item;
 import com.example.louis.weinschmeckeroffenburg.Datenbank.OnTapListener;
-import com.example.louis.weinschmeckeroffenburg.Datenbank.adapter.VocabularyAdapter;
+import com.example.louis.weinschmeckeroffenburg.Datenbank.adapter.WineAdapter;
 import com.example.louis.weinschmeckeroffenburg.R;
 
 import java.util.ArrayList;
@@ -26,66 +25,75 @@ import java.util.ArrayList;
  */
 public class SucheFrag extends Fragment {
 
-        private  RecyclerView recyclerView;
-        private DatabaseHelper databaseHelper;
-        private ArrayList<Item> arrayList = new ArrayList<Item>();
-        private Cursor cursor;
-        private VocabularyAdapter adapter;
-
+    private RecyclerView recyclerView;
+    private SearchView mSearchView;
+    private ArrayList<Item> mWineList;
+    private WineAdapter mWineAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.list_item,container,false);
+        ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.search_wine_list, container, false);
 
-recyclerView = viewGroup.findViewById(R.id.recycler_view);
-        loadDatabase();
+        mSearchView = viewGroup.findViewById(R.id.SV_suche);
+        recyclerView = viewGroup.findViewById(R.id.recycler_view);
+
+        loadDataFromDatabase();
+        setupSearch();
+
         return viewGroup;
     }
-public void loadDatabase(){
-        databaseHelper = new DatabaseHelper(getActivity());
-        try {
-            databaseHelper.checkAndCopyDatabase();
-            databaseHelper.openDatabase();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        try {
-            cursor = databaseHelper.QueryData("select * from wein_table");
 
-            if (cursor!=null) {
-                if (cursor.moveToFirst()) {
-                    do {
-                        Item item = new Item();
-                        item.setWeinname(cursor.getString(1));
-                        item.setJahrgang(cursor.getString(2));
-                        item.setLand(cursor.getString(3));
-                        item.setPreis(cursor.getString(4));
-                        arrayList.add(item);
-                    } while (cursor.moveToNext());
-                }
+    private void setupSearch() {
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                filterWineList(s);
+                return false;
             }
-        }catch (SQLException e) {
-            e.printStackTrace();
-        }
-    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-    adapter = new VocabularyAdapter (getActivity(),arrayList);
-    adapter.setOnTapListener(new OnTapListener() {
-        @Override
-        public void OnTapView(int position) {
-            Toast.makeText(getContext(),"Click to" + position, Toast.LENGTH_SHORT).show();
 
+            @Override
+            public boolean onQueryTextChange(String s) {
+                filterWineList(s);
+                return false;
+            }
+        });
 
-        }
-    });
-
-    recyclerView.setHasFixedSize(true);
-    recyclerView.setLayoutManager(linearLayoutManager);
-    recyclerView.setAdapter(adapter);
-
-}
-
-
+        mSearchView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                // hier einfach die mWineList auf den Adapter setzen
+            }
+        });
     }
+
+    private void filterWineList(String s) {
+        ArrayList<Item> tmpList = new ArrayList<>();
+
+        if (s.equals("")) {
+            mWineAdapter.setWeinListe(mWineList);
+            return;
+        }
+
+        for (Item wine : mWineList) {
+            if (wine.getWeinname().equals(s)) {
+                tmpList.add(wine);
+            }
+        }
+
+        mWineAdapter.setWeinListe(tmpList);
+    }
+
+    public void loadDataFromDatabase() {
+        DatabaseHelper databaseHelper = new DatabaseHelper(getActivity());
+        mWineList = databaseHelper.getAllWineFromDB();
+
+        mWineAdapter = new WineAdapter(getActivity(), getFragmentManager(), mWineList, databaseHelper);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(mWineAdapter);
+    }
+}
 
 
 
