@@ -28,7 +28,7 @@ public class SetViewHolder extends RecyclerView.ViewHolder {
         txt_jahrgang = itemView.findViewById(R.id.txt_jahrgang);
         txt_land = itemView.findViewById(R.id.txt_land);
         txt_preis = itemView.findViewById(R.id.txt_preis);
-        img_wein = itemView.findViewById(R.id.weinbild);
+      //  img_wein = itemView.findViewById(R.id.weinbild);
         mButtonHerz = itemView.findViewById(R.id.Herz);
     }
 }

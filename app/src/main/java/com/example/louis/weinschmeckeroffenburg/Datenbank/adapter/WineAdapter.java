@@ -91,7 +91,6 @@ public class WineAdapter extends RecyclerView.Adapter<SetViewHolder> {
                 bundle.putString("wineShop", wine.getLaden());
                 bundle.putString("wineOrigin", wine.getLand());
                 bundle.putString("wineContent", wine.getContent());
-                bundle.putString("wineImg", wine.getImg());
 
                 singleWineFrag.setArguments(bundle);
                 mFragmentManager.beginTransaction().replace(R.id.content, singleWineFrag, singleWineFrag.getTag()).commit();

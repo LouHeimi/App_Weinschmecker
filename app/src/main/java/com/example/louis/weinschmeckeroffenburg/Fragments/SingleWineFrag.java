@@ -1,9 +1,11 @@
 package com.example.louis.weinschmeckeroffenburg.Fragments;
 
 
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.ImageViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,8 +45,7 @@ public class SingleWineFrag extends Fragment {
         TextView tv_wine_taste = getActivity().findViewById(R.id.tv_wine_taste);
         TextView tv_wine_shop = getActivity().findViewById(R.id.tv_wine_shop);
         TextView tv_wine_origin = getActivity().findViewById(R.id.tv_wine_origin);
-        TextView tv_wine_content = getActivity().findViewById(R.id.tv_wine_content);
-        ImageView iv_wine_img = getActivity().findViewById(R.id.imageView);
+        //TextView tv_wine_content = getActivity().findViewById(R.id.tv_wine_content);
 
 
         String wineID = this.getArguments().get("wineName").toString();
@@ -54,9 +55,7 @@ public class SingleWineFrag extends Fragment {
         String wine_taste = this.getArguments().get("wineTaste").toString();
         String wine_shop = this.getArguments().get("wineShop").toString();
         String wine_origin = this.getArguments().get("wineOrigin").toString();
-        String wine_content = this.getArguments().get("wineContent").toString();
-        String wine_img = this.getArguments().get("wineImg").toString();
-
+        //String wine_content = this.getArguments().get("wineContent").toString();
 
      /*Falls wir ein Zurück-Knopf zur Liste nochhaben wollen, aber eher nicht userfreundlich
 
@@ -84,9 +83,6 @@ public class SingleWineFrag extends Fragment {
         tv_wine_taste.setText(wine_taste);
         tv_wine_shop.setText(wine_shop);
         tv_wine_origin.setText(wine_origin);
-        tv_wine_content.setText(wine_content);
-        iv_wine_img.setImageResource(R.drawable.weinflasche);
-
 
     }
 
