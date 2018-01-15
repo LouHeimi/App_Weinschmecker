@@ -54,7 +54,6 @@
         android:layout_marginBottom="11dp"
         android:layout_marginEnd="18dp"
         android:background="@drawable/settings"
-        android:onClick="onSelectFragment"
         android:tint="@android:color/transparent"
         android:visibility="visible" />
 

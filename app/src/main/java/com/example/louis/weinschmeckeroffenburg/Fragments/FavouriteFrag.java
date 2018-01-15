@@ -9,11 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.example.louis.weinschmeckeroffenburg.Datenbank.DatabaseHelper;
 import com.example.louis.weinschmeckeroffenburg.Datenbank.Item.Item;
-import com.example.louis.weinschmeckeroffenburg.Datenbank.OnTapListener;
 import com.example.louis.weinschmeckeroffenburg.Datenbank.adapter.WineAdapter;
 import com.example.louis.weinschmeckeroffenburg.R;
 
@@ -23,7 +21,7 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SucheFrag extends Fragment {
+public class FavouriteFrag extends Fragment {
 
     private RecyclerView recyclerView;
     private SearchView mSearchView;
@@ -43,6 +41,17 @@ public class SucheFrag extends Fragment {
         return viewGroup;
     }
 
+    public void loadDataFromDatabase() {
+        DatabaseHelper databaseHelper = new DatabaseHelper(getActivity());
+        mWineList = databaseHelper.getAllFavouriteWineFromDB();
+
+        mWineAdapter = new WineAdapter(getActivity(), getFragmentManager(), mWineList, databaseHelper);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(mWineAdapter);
+    }
+
     private void setupSearch() {
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -57,43 +66,15 @@ public class SucheFrag extends Fragment {
                 return false;
             }
         });
-
-        mSearchView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                // hier einfach die mWineList auf den Adapter setzen
-            }
-        });
     }
 
     private void filterWineList(String s) {
         ArrayList<Item> tmpList = new ArrayList<>();
-
-        if (s.equals("")) {
-            mWineAdapter.setWeinListe(mWineList);
-            return;
-        }
-
         for (Item wine : mWineList) {
             if (wine.getWeinname().equals(s)) {
                 tmpList.add(wine);
             }
         }
-
         mWineAdapter.setWeinListe(tmpList);
     }
-
-    public void loadDataFromDatabase() {
-        DatabaseHelper databaseHelper = new DatabaseHelper(getActivity());
-        mWineList = databaseHelper.getAllWineFromDB();
-
-        mWineAdapter = new WineAdapter(getActivity(), getFragmentManager(), mWineList, databaseHelper);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(mWineAdapter);
-    }
 }
-
-
-

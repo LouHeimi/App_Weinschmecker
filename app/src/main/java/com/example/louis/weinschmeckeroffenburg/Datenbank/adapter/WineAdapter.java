@@ -13,7 +13,6 @@ import com.example.louis.weinschmeckeroffenburg.Datenbank.DatabaseHelper;
 import com.example.louis.weinschmeckeroffenburg.Datenbank.Item.Item;
 import com.example.louis.weinschmeckeroffenburg.Datenbank.Item.SetViewHolder;
 import com.example.louis.weinschmeckeroffenburg.Fragments.SingleWineFrag;
-import com.example.louis.weinschmeckeroffenburg.Fragments.SucheFrag;
 import com.example.louis.weinschmeckeroffenburg.R;
 
 import java.util.Collections;

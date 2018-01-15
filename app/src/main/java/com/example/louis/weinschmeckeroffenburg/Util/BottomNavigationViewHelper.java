@@ -1,4 +1,4 @@
-package com.example.louis.weinschmeckeroffenburg;
+package com.example.louis.weinschmeckeroffenburg.Util;
 
 import android.annotation.SuppressLint;
 import android.support.design.internal.BottomNavigationItemView;

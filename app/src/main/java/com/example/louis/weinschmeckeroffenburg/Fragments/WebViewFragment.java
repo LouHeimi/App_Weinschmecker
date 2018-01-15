@@ -8,13 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 
-/**
- * WebViewFragment support for android.support.v4.app.Fragment
- * This demo has been tested for SDK 10 and 22.
- *
- * @Author @juanmendezinfo
- * @see <a href="http://www.juanmendez.info/2015/09/webviewfragment-which-supports.html">details</a>
- */
 public class WebViewFragment extends Fragment
 {
     public static WebView mWebView;

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="250dp"
+
+    >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Einstellungen"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView1"
+        android:background="@color/colorPrimary" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignBaseline="@+id/textView1"
+        android:layout_alignBottom="@+id/textView1"
+        android:layout_marginStart="14dp"
+        android:layout_toEndOf="@+id/textView2"
+        android:background="@drawable/ic_dialog_close_light" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp"
+        android:text="bla bla bla bla bla"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+</RelativeLayout>

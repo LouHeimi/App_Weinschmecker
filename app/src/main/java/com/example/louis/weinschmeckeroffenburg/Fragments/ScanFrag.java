@@ -8,8 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.louis.weinschmeckeroffenburg.Datenbank.DatabaseHelper;
+import com.example.louis.weinschmeckeroffenburg.Datenbank.Item.Item;
+import com.example.louis.weinschmeckeroffenburg.Datenbank.adapter.WineAdapter;
 import com.example.louis.weinschmeckeroffenburg.R;
 import com.google.zxing.Result;
+
+import java.util.ArrayList;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
@@ -43,13 +48,11 @@ public class ScanFrag extends Fragment implements ZXingScannerView.ResultHandler
 
     }
 
-    //Barcodescanner
+    //Barcodescanner, Öffnet eine Kamera-View
     public void scan (View view){
-
         zXingScannerView = new ZXingScannerView(getContext().getApplicationContext());
         zXingScannerView.setResultHandler(this);
         zXingScannerView.startCamera();
-
     }
 
     //new
@@ -68,33 +71,29 @@ public class ScanFrag extends Fragment implements ZXingScannerView.ResultHandler
 
     }
 
+
+
+    //Wine-ID
     @Override
     public void handleResult(Result rawResult) {
 
-        wineID = rawResult.getText();
-        SingleWineFragBarcode singleWineFragBarcode = new SingleWineFragBarcode();
+
+
+        /*DatabaseHelper databaseHelper = new DatabaseHelper(getActivity()); //(oder durch Parameter übergeben)
+        WineAdapter scannedWineObject = databaseHelper.getWine(rawResult.getText()); //hier auf null checken, falls kein WeinObjekt zurückkommt und entsprechend Fehler ausgeben*/
         Bundle bundle= new Bundle();
         bundle.putString("wineID", wineID);
+        //bundle.putString("wineName", scannedWineObject.getName());
+
+
+        wineID = rawResult.getText();
+        SingleWineFragBarcode singleWineFragBarcode = new SingleWineFragBarcode();
         singleWineFragBarcode.setArguments(bundle);
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content, singleWineFragBarcode, singleWineFragBarcode.getTag()).commit();
         final String result = rawResult.getText();
 
     }
 
-    /*@Override
-    public void handleResult(Result rawResult) {
-        // Do something with the result here
-        Log.v("TAG", rawResult.getText()); // Prints scan results
-
-         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Scan Result");
-        builder.setMessage(rawResult.getText());
-        AlertDialog alert1 = builder.create();
-        alert1.show();
-
-        // If you would like to resume scanning, call this method below:
-        zXingScannerView.resumeCameraPreview(this);
-    }*/
 
 
 }
