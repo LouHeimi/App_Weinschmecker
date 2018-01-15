@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.example.louis.weinschmeckeroffenburg.Datenbank.DatabaseHelper;
 import com.example.louis.weinschmeckeroffenburg.Datenbank.Item.Item;
 import com.example.louis.weinschmeckeroffenburg.Datenbank.Item.SetViewHolder;
+import com.example.louis.weinschmeckeroffenburg.Fragments.FavouriteFrag;
 import com.example.louis.weinschmeckeroffenburg.Fragments.SingleWineFrag;
 import com.example.louis.weinschmeckeroffenburg.R;
 
@@ -51,6 +52,7 @@ public class WineAdapter extends RecyclerView.Adapter<SetViewHolder> {
         holder.txt_jahrgang.setText(wine.getJahrgang());
         holder.txt_land.setText(wine.getLand());
         holder.txt_preis.setText(wine.getPreis());
+
         holder.isFavourite = wine.getIsFavourite();
 
         if (wine.getIsFavourite() == 1) {
@@ -89,11 +91,19 @@ public class WineAdapter extends RecyclerView.Adapter<SetViewHolder> {
                 bundle.putString("wineShop", wine.getLaden());
                 bundle.putString("wineOrigin", wine.getLand());
                 bundle.putString("wineContent", wine.getContent());
+                bundle.putString("wineImg", wine.getImg());
+
                 singleWineFrag.setArguments(bundle);
                 mFragmentManager.beginTransaction().replace(R.id.content, singleWineFrag, singleWineFrag.getTag()).commit();
+
+
             }
         });
-    }
+
+
+
+
+        }
 
     @Override
     public int getItemCount() {

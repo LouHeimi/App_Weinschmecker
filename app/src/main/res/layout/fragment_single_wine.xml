@@ -8,40 +8,46 @@
     <RelativeLayout
         android:id="@+id/V_single_wine_background"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="130dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:background="@color/colorPrimary">
 
         <TextView
             android:id="@+id/TV_wine_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="36sp"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/tv_wine_price"
+            android:layout_marginTop="18dp"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:typeface="serif"
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="0dp"
             tools:text="Wine Name" />
 
-        <Button
-            android:id="@+id/B_back_to_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/TV_wine_name"
-            android:text="zur Liste"/>
-
         <TextView
-            android:id="@+id/TV_wine_price"
+            android:id="@+id/tv_wine_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/TV_wine_name"
+            android:layout_above="@+id/tv_wine_year"
+            android:layout_alignStart="@+id/tv_wine_year"
             android:text="fragment_single_wine"
+            android:textColor="@color/colorHellrot"
+            android:textSize="20dp"
+            android:textStyle="bold"
             tools:text="35€" />
 
         <TextView
-            android:id="@+id/TV_wine_year"
+            android:id="@+id/tv_wine_year"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/TV_wine_price"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="14dp"
+            android:layout_marginStart="112dp"
             android:text="fragment_single_wine"
             android:textColor="@color/colorWhite"
             tools:text="Jahrgang 2016" />
@@ -49,21 +55,132 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/V_single_wine_background_grey"
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_below="@id/V_single_wine_background"
-        android:background="@color/colorGrey" />
+        android:layout_height="110dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imageView"
+        android:layout_marginTop="11dp"
+        android:background="@color/colorGrey">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="112dp"
+            android:layout_marginTop="14dp"
+            android:text="Sorte:"
+            android:textColor="@color/colorWhite" />
+
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/textView3"
+            android:layout_below="@+id/textView3"
+            android:layout_marginBottom="5dp"
+            android:text="Geschmack:"
+            android:textColor="@color/colorWhite" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/textView7"
+            android:layout_below="@+id/textView7"
+            android:layout_marginBottom="5dp"
+            android:text="Laden:"
+            android:textColor="@color/colorWhite" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/textView6"
+            android:layout_below="@+id/textView6"
+            android:text="Herkunft:"
+            android:textColor="@color/colorWhite" />
+
+        <TextView
+            android:id="@+id/tv_wine_sort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textView3"
+            android:layout_alignBottom="@+id/textView3"
+            android:layout_toEndOf="@+id/textView3"
+            android:text="TextView"
+            android:textColor="@color/colorWhite" />
+
+        <TextView
+            android:id="@+id/tv_wine_taste"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textView7"
+            android:layout_alignBottom="@+id/textView7"
+            android:layout_toEndOf="@+id/textView7"
+            android:text="TextView"
+            android:textColor="@color/colorWhite" />
+
+        <TextView
+            android:id="@+id/tv_wine_shop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textView6"
+            android:layout_alignBottom="@+id/textView6"
+            android:layout_toEndOf="@+id/textView6"
+            android:text="TextView"
+            android:textColor="@color/colorWhite" />
+
+        <TextView
+            android:id="@+id/tv_wine_origin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textView4"
+            android:layout_alignBottom="@+id/textView4"
+            android:layout_toEndOf="@+id/textView4"
+            android:text="TextView"
+            android:textColor="@color/colorWhite" />
+
+
+    </RelativeLayout>
 
     <TextView
-        android:id="@+id/wineID"
+        android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/V_single_wine_background"
-        android:layout_marginStart="66dp"
-        android:layout_marginTop="96dp"
-        android:text="TextView" />
+        android:layout_below="@+id/relativeLayout"
+        android:layout_marginStart="58dp"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/colorBlack"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:typeface="serif"
+        tools:text="Weitere Informationen" />
+
+    <TextView
+        android:id="@+id/tv_wine_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView5"
+        android:layout_below="@+id/textView5"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp"
+        android:text="TextView"
+        android:textColor="@color/colorGrey" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_alignEnd="@+id/tv_wine_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="15dp"
+        app:srcCompat="@drawable/weinflasche" />
 
 
 </RelativeLayout>

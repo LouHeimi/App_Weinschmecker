@@ -39,21 +39,21 @@ public class MainActivity extends AppCompatActivity {
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        //Öffnen der einzelnen Fragments bei Klick auf Navigation-Icons
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
+                        = new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    //Öffnen der einzelnen Fragments bei Klick auf Navigation-Icons
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
 
-                case R.id.navigation_suche:
-                    SearchFrag searchFrag = new SearchFrag();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.content, searchFrag, searchFrag.getTag()).commit();
-                    return true;
+                            case R.id.navigation_suche:
+                                SearchFrag searchFrag = new SearchFrag();
+                                getSupportFragmentManager().beginTransaction().replace(R.id.content, searchFrag, searchFrag.getTag()).commit();
+                                return true;
 
-                case R.id.navigation_scan:
-                    ScanFrag scanFrag = new ScanFrag();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.content, scanFrag, scanFrag.getTag()).commit();
-                    return true;
+                            case R.id.navigation_scan:
+                                ScanFrag scanFrag = new ScanFrag();
+                                getSupportFragmentManager().beginTransaction().replace(R.id.content, scanFrag, scanFrag.getTag()).commit();
+                                return true;
 
                 case R.id.navigation_weinstyle:
                     WinestyleFrag winestyleFrag = new WinestyleFrag();
@@ -177,14 +177,6 @@ dialog.cancel();
             }
 
         });
-
-
-
-
-
-
-
-
 
 
 
