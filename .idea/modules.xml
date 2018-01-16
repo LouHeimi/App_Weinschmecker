@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Weinschmecker.iml" filepath="$PROJECT_DIR$/Weinschmecker.iml" />
       <module fileurl="file://C:\Users\louis\AndroidStudioProjects\WeinschmeckerOffenburg\Weinschmecker.iml" filepath="C:\Users\louis\AndroidStudioProjects\WeinschmeckerOffenburg\Weinschmecker.iml" />
-      <module fileurl="file://$PROJECT_DIR$/WeinschmeckerOffenburg.iml" filepath="$PROJECT_DIR$/WeinschmeckerOffenburg.iml" />
       <module fileurl="file://F:\Weinschmecker\WeinschmeckerOffenburg.iml" filepath="F:\Weinschmecker\WeinschmeckerOffenburg.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>

@@ -89,13 +89,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public Item getWine(int id) {
+    public Item getWine(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
-
-        Cursor cursor = db.query(WINE_TABLE,
-                getColumns(),
-                KEY_ID + "=?",
-                new String[]{String.valueOf(id)}, null, null, null, null);
+        String selectQuery = "SELECT  * FROM " + WINE_TABLE + " WHERE " + KEY_ID + " =?";
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{id});
 
         if (cursor != null)
             cursor.moveToFirst();
@@ -127,6 +124,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(wineList.isEmpty()) {
             wineList = createWineData();
         }
+
+        cursor.close();
 
         return wineList;
     }
@@ -291,7 +290,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
                 "wein_1",
                 0);
-        Item wine7 = new Item("8",
+        Item wine7 = new Item("42141105",
                 "Savignon Blanc",
                 "1990",
                 "Spanien",
