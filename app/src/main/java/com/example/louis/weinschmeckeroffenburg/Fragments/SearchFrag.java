@@ -65,6 +65,8 @@ public class SearchFrag extends Fragment {
     }
 
     private void filterWineList(String s) {
+
+        // Ihr müsst theoretisch nur hier den Suchalgorithmus anpassen, statt .equals einfach eine .getFirstCharacter o.Ä.
         ArrayList<Item> tmpList = new ArrayList<>();
 
         if (s.equals("")) {

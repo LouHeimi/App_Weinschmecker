@@ -61,6 +61,17 @@ public class WineAdapter extends RecyclerView.Adapter<SetViewHolder> {
         holder.isFavourite = wine.getIsFavourite();
 
         //Picasso.with(holder.wine_image.getContext()).load(wine.getImg()).into(holder.wine_image);
+        switch (wine.getImg()) {
+            case "wein_1":
+                Picasso.with(context).load(R.drawable.wein_1).into(holder.wine_image);
+                break;
+            case "wein_2":
+                Picasso.with(context).load(R.drawable.wein_2).into(holder.wine_image);
+                break;
+            default:
+                Picasso.with(context).load(R.drawable.wein_3).into(holder.wine_image);
+                break;
+        }
 
         if (wine.getIsFavourite() == 1) {
             holder.mButtonHerz.setImageDrawable(ContextCompat.getDrawable(context.getApplicationContext(), R.drawable.herz));
