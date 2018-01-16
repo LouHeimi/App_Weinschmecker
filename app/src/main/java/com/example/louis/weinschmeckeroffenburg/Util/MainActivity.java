@@ -2,9 +2,7 @@ package com.example.louis.weinschmeckeroffenburg.Util;
 
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -14,10 +12,8 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 
 import com.example.louis.weinschmeckeroffenburg.Fragments.FavouriteFrag;
@@ -106,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
 
-
+        //Overlay für Settings-Button
         button = (ImageButton) findViewById(R.id.btnSettings);
 
         // add button listener
@@ -150,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 
                 LayoutInflater inflater = getLayoutInflater();
-                View dialogView = inflater.inflate(R.layout.custom_layout,null);
+                View dialogView = inflater.inflate(R.layout.overlay_settings,null);
 
                 builder.setView(dialogView);
 

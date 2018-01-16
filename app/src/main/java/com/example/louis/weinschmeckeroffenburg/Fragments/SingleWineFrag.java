@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.example.louis.weinschmeckeroffenburg.Datenbank.DatabaseHelper;
 import com.example.louis.weinschmeckeroffenburg.Fragments_old.SucheFrag;
 import com.example.louis.weinschmeckeroffenburg.R;
+import com.squareup.picasso.Picasso;
 
 
 /**
@@ -57,7 +58,7 @@ public class SingleWineFrag extends Fragment {
         String wine_origin = this.getArguments().get("wineOrigin").toString();
         //String wine_content = this.getArguments().get("wineContent").toString();
 
-     /*Falls wir ein Zurück-Knopf zur Liste nochhaben wollen, aber eher nicht userfreundlich
+     /*Falls wir ein Zurück-Knopf zur Liste noch  haben wollen, geht aber auch gut über Navigationsleiste
 
         Button backToListButton = getActivity().findViewById(R.id.B_back_to_list);
 
@@ -83,7 +84,6 @@ public class SingleWineFrag extends Fragment {
         tv_wine_taste.setText(wine_taste);
         tv_wine_shop.setText(wine_shop);
         tv_wine_origin.setText(wine_origin);
-
     }
 
 }

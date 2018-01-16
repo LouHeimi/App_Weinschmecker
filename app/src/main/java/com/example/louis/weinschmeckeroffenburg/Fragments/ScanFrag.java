@@ -4,6 +4,7 @@ package com.example.louis.weinschmeckeroffenburg.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,9 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 public class ScanFrag extends Fragment implements ZXingScannerView.ResultHandler {
 
     private ZXingScannerView zXingScannerView;
-    public String wineID;
+
+    private ArrayList<Item> mWineList;
+    private WineAdapter mWineAdapter;
 
     public ScanFrag() {
         // Required empty public constructor
@@ -73,26 +76,23 @@ public class ScanFrag extends Fragment implements ZXingScannerView.ResultHandler
 
 
 
-    //Wine-ID
+
     @Override
     public void handleResult(Result rawResult) {
 
 
 
-        /*DatabaseHelper databaseHelper = new DatabaseHelper(getActivity()); //(oder durch Parameter übergeben)
-        WineAdapter scannedWineObject = databaseHelper.getWine(rawResult.getText()); //hier auf null checken, falls kein WeinObjekt zurückkommt und entsprechend Fehler ausgeben*/
+        DatabaseHelper databaseHelper = new DatabaseHelper(getActivity());
+      //  Wine scannedWineObject = databaseHelper.getWine(rawResult.getText()); //checken ob ID da ist, sonst Fehlermeldung
         Bundle bundle= new Bundle();
-        bundle.putString("wineID", wineID);
-        //bundle.putString("wineName", scannedWineObject.getName());
+        //bundle.putString("wineID", scannedWineObject.getID());
 
-
-        wineID = rawResult.getText();
         SingleWineFragBarcode singleWineFragBarcode = new SingleWineFragBarcode();
         singleWineFragBarcode.setArguments(bundle);
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content, singleWineFragBarcode, singleWineFragBarcode.getTag()).commit();
-        final String result = rawResult.getText();
 
     }
+
 
 
 

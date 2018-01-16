@@ -2,12 +2,15 @@ package com.example.louis.weinschmeckeroffenburg.Datenbank.adapter;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.louis.weinschmeckeroffenburg.Datenbank.DatabaseHelper;
 import com.example.louis.weinschmeckeroffenburg.Datenbank.Item.Item;
@@ -18,6 +21,8 @@ import com.example.louis.weinschmeckeroffenburg.R;
 
 import java.util.Collections;
 import java.util.List;
+
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by louis on 21.12.2017.
@@ -47,13 +52,15 @@ public class WineAdapter extends RecyclerView.Adapter<SetViewHolder> {
 
     @Override
     public void onBindViewHolder(final SetViewHolder holder, final int position) {
+
         final Item wine = weinListe.get(position);
         holder.txt_weinname.setText(wine.getWeinname());
         holder.txt_jahrgang.setText(wine.getJahrgang());
         holder.txt_land.setText(wine.getLand());
         holder.txt_preis.setText(wine.getPreis());
-
         holder.isFavourite = wine.getIsFavourite();
+
+        //Picasso.with(holder.wine_image.getContext()).load(wine.getImg()).into(holder.wine_image);
 
         if (wine.getIsFavourite() == 1) {
             holder.mButtonHerz.setImageDrawable(ContextCompat.getDrawable(context.getApplicationContext(), R.drawable.herz));
@@ -91,6 +98,7 @@ public class WineAdapter extends RecyclerView.Adapter<SetViewHolder> {
                 bundle.putString("wineShop", wine.getLaden());
                 bundle.putString("wineOrigin", wine.getLand());
                 bundle.putString("wineContent", wine.getContent());
+                bundle.putString("wineImg", wine.getImg());
 
                 singleWineFrag.setArguments(bundle);
                 mFragmentManager.beginTransaction().replace(R.id.content, singleWineFrag, singleWineFrag.getTag()).commit();
@@ -98,7 +106,6 @@ public class WineAdapter extends RecyclerView.Adapter<SetViewHolder> {
 
             }
         });
-
 
 
 
