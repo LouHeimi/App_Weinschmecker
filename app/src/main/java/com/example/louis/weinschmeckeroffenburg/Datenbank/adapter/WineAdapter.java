@@ -15,10 +15,10 @@ import android.widget.ImageView;
 import com.example.louis.weinschmeckeroffenburg.Datenbank.DatabaseHelper;
 import com.example.louis.weinschmeckeroffenburg.Datenbank.Item.Item;
 import com.example.louis.weinschmeckeroffenburg.Datenbank.Item.SetViewHolder;
-import com.example.louis.weinschmeckeroffenburg.Fragments.FavouriteFrag;
 import com.example.louis.weinschmeckeroffenburg.Fragments.SingleWineFrag;
 import com.example.louis.weinschmeckeroffenburg.R;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -60,7 +60,58 @@ public class WineAdapter extends RecyclerView.Adapter<SetViewHolder> {
         holder.txt_preis.setText(wine.getPreis());
         holder.isFavourite = wine.getIsFavourite();
 
-        //Picasso.with(holder.wine_image.getContext()).load(wine.getImg()).into(holder.wine_image);
+        switch (wine.getImg()) {
+
+            case "wine_0":
+                Picasso.with(context).load(R.drawable.wine_0).into(holder.image);
+                break;
+            case "wine_1":
+                Picasso.with(context).load(R.drawable.wine_1).into(holder.image);
+                break;
+            case "wine_2":
+                Picasso.with(context).load(R.drawable.wine_2).into(holder.image);
+                break;
+            case "wine_3":
+                Picasso.with(context).load(R.drawable.wine_3).into(holder.image);
+                break;
+            case "wine_4":
+                Picasso.with(context).load(R.drawable.wine_4).into(holder.image);
+                break;
+            case "wine_5":
+                Picasso.with(context).load(R.drawable.wine_5).into(holder.image);
+                break;
+            case "wine_6":
+                Picasso.with(context).load(R.drawable.wine_6).into(holder.image);
+                break;
+            case "wine_7":
+                Picasso.with(context).load(R.drawable.wine_7).into(holder.image);
+                break;
+            case "wine_8":
+                Picasso.with(context).load(R.drawable.wine_8).into(holder.image);
+                break;
+            case "wine_9":
+                Picasso.with(context).load(R.drawable.wine_9).into(holder.image);
+                break;
+            case "wine_10":
+                Picasso.with(context).load(R.drawable.wine_10).into(holder.image);
+                break;
+            case "wine_11":
+                Picasso.with(context).load(R.drawable.wine_11).into(holder.image);
+                break;
+            case "wine_12":
+                Picasso.with(context).load(R.drawable.wine_12).into(holder.image);
+                break;
+            case "wine_13":
+                Picasso.with(context).load(R.drawable.wine_13).into(holder.image);
+                break;
+            case "wine_14":
+                Picasso.with(context).load(R.drawable.wine_14).into(holder.image);
+                break;
+            default:
+                Picasso.with(context).load(R.drawable.wine_15).into(holder.image);
+                break;
+        }
+
 
         if (wine.getIsFavourite() == 1) {
             holder.mButtonHerz.setImageDrawable(ContextCompat.getDrawable(context.getApplicationContext(), R.drawable.herz));
@@ -100,6 +151,12 @@ public class WineAdapter extends RecyclerView.Adapter<SetViewHolder> {
                 bundle.putString("wineContent", wine.getContent());
                 bundle.putString("wineImg", wine.getImg());
 
+
+
+
+
+
+
                 singleWineFrag.setArguments(bundle);
                 mFragmentManager.beginTransaction().replace(R.id.content, singleWineFrag, singleWineFrag.getTag()).commit();
 
@@ -122,6 +179,13 @@ public class WineAdapter extends RecyclerView.Adapter<SetViewHolder> {
 
     public void setWeinListe(List<Item> weinListe) {
         this.weinListe = weinListe;
+        notifyDataSetChanged();
+    }
+
+
+    public void setFilter(List<Item> weine) {
+        weinListe = new ArrayList<>();
+        weinListe.addAll(weine);
         notifyDataSetChanged();
     }
 }

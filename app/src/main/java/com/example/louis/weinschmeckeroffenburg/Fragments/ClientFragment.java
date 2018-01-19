@@ -1,4 +1,4 @@
-package com.example.louis.weinschmeckeroffenburg.Fragments_old;
+package com.example.louis.weinschmeckeroffenburg.Fragments;
 
 
 import android.app.ProgressDialog;
@@ -43,6 +43,8 @@ public class ClientFragment extends WebViewFragment {
                         progress.dismiss();
                 }
             });
+
+            progress.setCanceledOnTouchOutside(true);
 
 
 

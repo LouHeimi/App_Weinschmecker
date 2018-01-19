@@ -19,7 +19,7 @@ public class SetViewHolder extends RecyclerView.ViewHolder {
     public TextView txt_jahrgang;
     public TextView txt_land;
     public TextView txt_preis;
-    public ImageView wine_image;
+    public ImageView image;
     public ImageButton mButtonHerz;
     public int isFavourite;
 
@@ -29,7 +29,7 @@ public class SetViewHolder extends RecyclerView.ViewHolder {
         txt_jahrgang = itemView.findViewById(R.id.txt_jahrgang);
         txt_land = itemView.findViewById(R.id.txt_land);
         txt_preis = itemView.findViewById(R.id.txt_preis);
-        wine_image = (ImageView) itemView.findViewById(R.id.wine_image);
+        image = (ImageView) itemView.findViewById(R.id.wine_image);
         mButtonHerz = itemView.findViewById(R.id.Herz);
     }
 }

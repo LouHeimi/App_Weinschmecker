@@ -55,7 +55,16 @@
             tools:text="Jahrgang 2016" />
 
 
+
+
     </RelativeLayout>
+    <ImageView
+        android:id="@+id/wine_image"
+        android:layout_width="50dp"
+        android:layout_height="130dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="11dp" />
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
@@ -157,46 +166,141 @@
             android:layout_toStartOf="@+id/textView7"
             app:srcCompat="@drawable/weinglas" />
 
+        <ImageButton
+            android:id="@+id/Herz"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="28dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:cropToPadding="false"
+            android:padding="35dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/herzleer" />
+
 
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_wine_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="58dp"
+        android:lineSpacingExtra="2sp"
+        android:text="Ein samtiger Wein zum Genießen mit fülligem Bukett und einem feinen Duft von Waldbeeren."
+        android:textColor="@color/colorGrey"
+        android:typeface="sans" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_alignStart="@+id/textView8"
+        android:layout_alignStart="@+id/tv_wine_content"
         android:layout_below="@+id/relativeLayout"
-        android:text="Weitere Informationen"
+        android:layout_marginTop="24dp"
+        android:text="Kommentar:"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/textView8"
+
+    <!--<TextView
+        android:id="@+id/tv_säure"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView5"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="17dp"
-        android:lineSpacingExtra="2sp"
-        android:text="Lorem ipsum dolor sit amet, consetetur
-sadipscing elitr, sed diam nonumy eirmod
-tempor invidunt ut labore et dolore
-magna aliquyam erat, sed diam voluptua.
-At vero eos et accusam et justo duo dolores
-et ea rebum. Stet clita kasd gubergren,
-no sea takimata sanctus est Lorem
-ipsum dolor sit amet. Lorem ipsum dolor
-sit amet, consetetur sadipscing elitr."
-        android:textColor="@color/colorGrey"
-        android:typeface="sans" />
+        android:layout_below="@+id/tv_säure"
+        android:layout_toEndOf="@+id/textView13"
+        android:text="fragment_single_wine"
+        android:textColor="@color/colorBlack" />
 
-    <ImageView
-        android:id="@+id/wine_image"
+
+    <TextView
+        android:id="@+id/tv_säure"
         android:layout_width="wrap_content"
-        android:layout_height="120dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="25dp"
-        app:srcCompat="@drawable/wein_1" />
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView11"
+        android:layout_alignBottom="@+id/textView11"
+        android:layout_toEndOf="@+id/textView11"
+        android:text="fragment_single_wine"
+        android:textColor="@color/colorBlack" />
+
+    <TextView
+        android:id="@+id/tv_qualität"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView13"
+        android:layout_toEndOf="@+id/textView14"
+        android:text="fragment_single_wine"
+        android:textColor="@color/colorBlack" />
+
+    <TextView
+        android:id="@+id/tv_alk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/tv_qualität"
+        android:layout_below="@+id/tv_qualität"
+        android:text="fragment_single_wine"
+        android:textColor="@color/colorBlack" />
+
+    <TextView
+        android:id="@+id/tv_rebsorte"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView12"
+        android:layout_toEndOf="@+id/textView15"
+        android:text="fragment_single_wine"
+        android:textColor="@color/colorBlack" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/wine_image"
+        android:layout_below="@+id/textView12"
+        android:text="Rebsorte: "
+        android:textColor="@color/colorBlack"
+        android:id="@+id/textView15" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView11"
+        android:layout_below="@+id/textView11"
+        android:text="Säuregehalt: "
+        android:textColor="@color/colorBlack"
+        android:id="@+id/textView13" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView8"
+        android:layout_below="@+id/textView8"
+        android:layout_marginTop="20dp"
+        android:text="Trinktemperatur: "
+        android:textColor="@color/colorBlack" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView8"
+        android:layout_below="@+id/textView14"
+        android:text="Alkohol: "
+        android:textColor="@color/colorBlack" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView13"
+        android:layout_below="@+id/textView13"
+        android:text="Qualität: "
+        android:textColor="@color/colorBlack" /> */-->
+
+
 
 </RelativeLayout>

@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import com.example.louis.weinschmeckeroffenburg.Datenbank.Item.Item;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by louis on 21.12.2017.
@@ -37,6 +38,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_CONTENT = "CONTENT";
     private static final String KEY_IMG = "IMG";
     private static final String KEY_FAVORIT = "FAVORIT";
+
+
 
     public DatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -89,13 +92,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public Item getWine(int id) {
-        SQLiteDatabase db = this.getWritableDatabase();
+    public Item getWine(String id) {
 
-        Cursor cursor = db.query(WINE_TABLE,
-                getColumns(),
-                KEY_ID + "=?",
-                new String[]{String.valueOf(id)}, null, null, null, null);
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selectQuery = "SELECT  * FROM " + WINE_TABLE + " WHERE " + KEY_ID + " =?";
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{id});
 
         if (cursor != null)
             cursor.moveToFirst();
@@ -109,6 +110,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 new String[]{String.valueOf(wine.getId())});
         db.close();
     }
+
 
     public ArrayList<Item> getAllWineFromDB() {
         ArrayList<Item> wineList = new ArrayList<>();
@@ -127,6 +129,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(wineList.isEmpty()) {
             wineList = createWineData();
         }
+        cursor.close();
 
         return wineList;
     }
@@ -166,6 +169,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(KEY_CONTENT, item.getContent());
         contentValues.put(KEY_IMG, item.getImg());
         contentValues.put(KEY_FAVORIT, item.getIsFavourite());
+
+
+
         return contentValues;
     }
 
@@ -200,108 +206,221 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 KEY_SERVIERVORSCHLAG,
                 KEY_CONTENT,
                 KEY_IMG,
-                KEY_FAVORIT};
+                KEY_FAVORIT,
+
+
+
+
+                };
     }
+//hier werden alle Daten eingepflegt
 
     private ArrayList<Item> createWineData() {
         ArrayList<Item> tmpWineList = new ArrayList<>();
 
-        Item wine0 = new Item("0",
-                "Savignon Blanc",
-                "1990",
-                "Deutschland",
-                "30",
-                "trocken",
-                "Weisswein",
-                "Laden",
-                "Serviervorschlag",
-                "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-                "wein_1",
+        Item wine0 = new Item("4003104002617",
+                "Collection Oberkirch Spätburgunder",
+                "2015",
+                "Baden",
+                "8,49 €",
+                "lieblich",
+                "Rotwein",
+                "Edeka",
+                "Zu Wildgerichten, Rinderbraten, Fondue (Fleisch und Käse), Käse",
+                "Ein samtiger Wein zum Genießen mit fülligem Bukett und einem feinen Duft von Waldbeeren.",
+
+                "wine_0",
                 0);
 
-        Item wine1 = new Item("1",
-                "Savignon Noir",
+        Item wine1 = new Item("4005758892262",
+                "Bischoffinger Tradition Spätburgunder",
+                "2016",
+                "Baden",
+                "4,49 €",
+                "trocken",
+                "Rotwein",
+                "Edeka",
+                "Fruchiger und ausgewogener Wein. Aromen von reifen Kirschen und Schokolade, feinherb, klares dichtes Rot",
+                "Fruchiger und ausgewogener Wein. Aromen von reifen Kirschen und Schokolade, feinherb, klares dichtes Rot.",
+                "wine_1",
+                0);
+        Item wine2 = new Item("4036505047918",
+                "Blanc de Blanc",
+                "2016",
+                "Baden",
+                "7.49 €",
+                "trocken",
+                "Weißwein",
+                "Edeka",
+                "Serviervorschlag",
+                "Der Cuvée begeistert durch seine spritzige, frische Art sowie durch Aromen von Weinbergpfirsich. Die Kombination mit dem Sauvignon Blanc überzeugt durch exotische Früchte wie Mango und Passionsfrucht.",
+                "wine_2",
+                0);
+        Item wine3 = new Item("4005460592269",
+                "Bötzinger Chardonnay",
+                "2016",
+                "Baden",
+                "5,99 €",
+                "trocken",
+                "Weißwein",
+                "Edeka",
+                "Serviervorschlag",
+                "Vielversprechendes Aroma nach reifen Äpfeln, etwas Maracuja, dazu röstige Note bei hellem Gelb. Begleitet von leichten Nusstönen und einer eleganten Säure.",
+                "wine_3",
+                0);
+        Item wine4 = new Item("4007474862529",
+                "Charakterköpfe 53 Region Affentaler",
                 "2015",
-                "Frankreich",
-                "30.00€",
+                "Baden",
+                "6,99 €",
                 "lieblich",
                 "Rotwein",
-                "Laden",
+                "Edeka",
                 "Serviervorschlag",
-                "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-                "herz",
+                "Ein samtiger Wein zum Genießen mit fülligem Bukett und einem feinen Duft von Waldbeeren.",
+                "wine_4",
                 0);
-        Item wine2 = new Item("3",
-                "Grauburgunder",
-                "2010",
-                "Deutschland, Baden",
-                "6.00€",
-                "lieblich",
-                "Rosé",
-                "Laden",
-                "Serviervorschlag",
-                "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-                "herz",
-                0);
-        Item wine3 = new Item("4",
-                "Savignon Blanc",
-                "1990",
-                "Spanien",
-                "30",
+        Item wine5 = new Item("4007474861973",
+                "Klassiker Baden Weißburgunder",
+                "2015",
+                "Baden",
+                "4,49 €",
                 "trocken",
                 "Weisswein",
-                "Laden",
+                "Edeka",
                 "Serviervorschlag",
-                "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-                "wein_1",
+                "In der Nase feine Blütenaromen und Birne. Ein fruchtiger Wein, im Geschmack viel Rasse und Frucht mit einem harmonischen Abgang.",
+                "wine_5",
                 0);
-        Item wine4 = new Item("5",
-                "Savignon Blanc",
-                "1990",
-                "Frankreich",
-                "30",
-                "lieblich",
+        Item wine6 = new Item("4011441202560",
+                "Durbacher Plauelrain Klingelberger",
+                "2015",
+                "Baden",
+                "7,99 €",
+                "süß",
+                "Weißwein",
+                "Edeka",
+                "Serviervorschlag",
+                "Eine vollmundige Spätlese mit reifem Fruchtspiel und schöner Mineralität. Vollreife Ananas- und Pfirsicharomen in der Nase, am Gaumen eher beerig. Saftig und kräftig garantiert dieser Wein ein intensives Geschmackserlebnis.",
+                "wine_6",
+                0);
+        Item wine7 = new Item("4007474860419",
+                "Edle Edition Riesling",
+                "2012",
+                "Baden",
+                "15,99 €",
+                "trocken",
+                "Weißwein",
+                "Edeka",
+                "Serviervorschlag",
+                "Ein fruchtiger Weißwein mit rassiger Säure und feiner Pfirsichnote.",
+                "wine_7",
+                0);
+
+        Item wine8 = new Item("4002140050859",
+                "Oberrotweiler Spätburgunder",
+                "2006",
+                "Baden",
+                "24,99 €",
+                "süß",
                 "Rotwein",
-                "Laden",
+                "Edeka",
                 "Serviervorschlag",
-                "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-                "wein_2",
+                "Tiefdunkler Rotwein mit dichtem, komplexen Geschmack mit sanften Gerbstoffen.",
+                "wine_8",
                 0);
-        Item wine5 = new Item("6",
-                "Savignon Blanc",
-                "1990",
-                "Deutschland",
-                "30",
+
+
+        Item wine9 = new Item("4002140975220",
+                "Oberrotweiler Rosé Spätburgunder",
+                "2016",
+                "Baden",
+                "4,79 €",
+                "trocken",
+                "Rosé",
+                "Edeka",
+                "Serviervorschlag",
+                "Schöne Fruchtreife in Kombination mit einer fruchtigen Art, lang anhaltend im Abgang.",
+                "wine_9",
+                0);
+
+
+        Item wine10 = new Item("4027295080254",
+                "Rammersweier Tradition Spätburgunder",
+                "2014",
+                "Baden",
+                "6,49 €",
+                "trocken",
+                "Rotwein",
+                "Edeka",
+                "Serviervorschlag",
+                "Rubinroter Wein mit Aromen von Kirsche, Mocca und schwarzem Pfeffer; feste Struktur, zurückhaltend in der Säure und intensiv im Geschmack.",
+                "wine_10",
+                0);
+
+        Item wine11 = new Item("4005848222610",
+                "Schliengener Sonnenstück Gutedel",
+                "2015",
+                "Baden",
+                "4,49 €",
+                "trocken",
+                "Weißwein",
+                "Edeka",
+                "Serviervorschlag",
+                "Empfehlungs als Frühlings- und Sommerwein mit feinen ausgeprägten Frucharomen. Belebender, anregender und frischer Wein.",
+                "wine_11",
+                0);
+
+        Item wine12 = new Item("4027295080254",
+                "Spätburgunder",
+                "2014",
+                "Baden",
+                "6,49 €",
+                "trocken",
+                "Rotwein",
+                "Edeka",
+                "Serviervorschlag",
+                "Der Duft dieses Rotweins erinnert an Aromen von Kirschen und Brombeeren, er hat eine niedrige Säure und sanften Gerbstoffen.",
+                "wine_12",
+                0);
+
+        Item wine13 = new Item("4012868101511",
+                "Waldulmer Pfarrberg Spätburgunder",
+                "2015",
+                "Baden",
+                "9,49 €",
                 "halbtrocken",
-                "Weisswein",
-                "Laden",
-                "Serviervorschlag",
-                "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-                "wein_3",
-                0);
-        Item wine6 = new Item("7",
-                "Savignon Blanc",
-                "1990",
-                "Schweiz",
-                "30",
-                "trocken",
                 "Rotwein",
-                "Laden",
+                "Edeka",
                 "Serviervorschlag",
-                "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-                "wein_1",
+                "Eleganter Duft nach reifen Kirschen, beerengelee mit einem Hauch Bitterschokolade und schwarzem Tee. Kräftiger Spätburgunder.",
+                "wine_13",
                 0);
-        Item wine7 = new Item("8",
-                "Savignon Blanc",
-                "1990",
-                "Spanien",
-                "30",
-                "lieblich",
-                "Rosé",
-                "Laden",
+
+        Item wine14 = new Item("4005371012214",
+                "Winzerkeller Auggener Schäf Gutedel",
+                "2016",
+                "Baden",
+                "3,79 €",
+                "trocken",
+                "Weißwein",
+                "Edeka",
                 "Serviervorschlag",
-                "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-                "wein_2",
+                "Traditionelle Markgräfler Rebsorte mit dezentem Bukett und milder Säure. Feinfruchtig, leicht und sehr ausgewogen bei strohgelber Farbe mit grünen Reflexen.",
+                "wine_14",
+                0);
+
+        Item wine15 = new Item("4003154602225",
+                "Rivaner trocken",
+                "2016",
+                "Baden",
+                "4,20 €",
+                "trocken",
+                "Weißwein",
+                "Edeka",
+                "Serviervorschlag",
+                "Traditionelle Markgräfler Rebsorte mit dezentem Bukett und milder Säure. Feinfruchtig, leicht und sehr ausgewogen bei strohgelber Farbe mit grünen Reflexen.",
+                "wine_15",
                 0);
 
         // Give back the list
@@ -313,6 +432,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         tmpWineList.add(wine5);
         tmpWineList.add(wine6);
         tmpWineList.add(wine7);
+        tmpWineList.add(wine8);
+        tmpWineList.add(wine9);
+        tmpWineList.add(wine10);
+        tmpWineList.add(wine11);
+        tmpWineList.add(wine12);
+        tmpWineList.add(wine13);
+        tmpWineList.add(wine14);
+        tmpWineList.add(wine15);
 
         // Insert it to database
         insertWine(wine0);
@@ -323,6 +450,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         insertWine(wine5);
         insertWine(wine6);
         insertWine(wine7);
+        insertWine(wine8);
+        insertWine(wine9);
+        insertWine(wine10);
+        insertWine(wine11);
+        insertWine(wine12);
+        insertWine(wine13);
+        insertWine(wine14);
+        insertWine(wine15);
 
         return tmpWineList;
     }

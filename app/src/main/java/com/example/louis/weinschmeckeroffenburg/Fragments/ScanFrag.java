@@ -83,11 +83,27 @@ public class ScanFrag extends Fragment implements ZXingScannerView.ResultHandler
 
 
         DatabaseHelper databaseHelper = new DatabaseHelper(getActivity());
-      //  Wine scannedWineObject = databaseHelper.getWine(rawResult.getText()); //checken ob ID da ist, sonst Fehlermeldung
-        Bundle bundle= new Bundle();
-        //bundle.putString("wineID", scannedWineObject.getID());
 
-        SingleWineFragBarcode singleWineFragBarcode = new SingleWineFragBarcode();
+
+        Item scannedWineObject = databaseHelper.getWine(rawResult.getText()); //checken ob ID da ist, sonst Fehlermeldung
+        Bundle bundle = new Bundle();
+        if(scannedWineObject != null) {
+            bundle.putString("wineName", scannedWineObject.getWeinname());
+            bundle.putString("winePrice", scannedWineObject.getPreis());
+            bundle.putString("wineYear", scannedWineObject.getJahrgang());
+            bundle.putString("wineSort", scannedWineObject.getArt());
+            bundle.putString("wineTaste", scannedWineObject.getGeschmack());
+            bundle.putString("wineShop", scannedWineObject.getLaden());
+            bundle.putString("wineOrigin", scannedWineObject.getLand());
+            bundle.putString("wineContent", scannedWineObject.getContent());
+            bundle.putString("wineImg", scannedWineObject.getImg());
+        }
+        SingleWineFrag singleWineFragBarcode = new SingleWineFrag();
+
+
+
+
+
         singleWineFragBarcode.setArguments(bundle);
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content, singleWineFragBarcode, singleWineFragBarcode.getTag()).commit();
 

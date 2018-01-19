@@ -16,6 +16,7 @@ import com.example.louis.weinschmeckeroffenburg.Datenbank.adapter.WineAdapter;
 import com.example.louis.weinschmeckeroffenburg.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -54,27 +55,33 @@ public class FavouriteFrag extends Fragment {
 
     private void setupSearch() {
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
             @Override
-            public boolean onQueryTextSubmit(String s) {
-                filterWineList(s);
+            public boolean onQueryTextChange(String newText) {
+                final List<Item> filteredWineList = filter(mWineList, newText);
+
+                mWineAdapter.setFilter(filteredWineList);
+                return true;
+            }
+
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
                 return false;
             }
 
-            @Override
-            public boolean onQueryTextChange(String s) {
-                filterWineList(s);
-                return false;
+            private List<Item> filter(List<Item> items, String query) {
+                query = query.toLowerCase();
+                final List<Item> filteredWineList = new ArrayList<>();
+                for (Item item : items) {
+                    final String text = item.getWeinname().toLowerCase();
+                    if (text.contains(query)) {
+                        filteredWineList.add(item);
+                    }
+                }
+                return filteredWineList;
             }
+
         });
-    }
-
-    private void filterWineList(String s) {
-        ArrayList<Item> tmpList = new ArrayList<>();
-        for (Item wine : mWineList) {
-            if (wine.getWeinname().equals(s)) {
-                tmpList.add(wine);
-            }
-        }
-        mWineAdapter.setWeinListe(tmpList);
     }
 }

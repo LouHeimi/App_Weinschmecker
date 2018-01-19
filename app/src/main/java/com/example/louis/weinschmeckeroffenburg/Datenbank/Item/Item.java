@@ -1,5 +1,7 @@
 package com.example.louis.weinschmeckeroffenburg.Datenbank.Item;
 
+import org.bytedeco.javacpp.presets.opencv_core;
+
 import java.sql.Blob;
 
 /**
@@ -19,7 +21,19 @@ public class Item {
     private String servierVorschlag;
     private String content;
     private String img;
+
+
+
+
     int mIsFavourite;
+
+
+
+    public int getmIsFavourite() {
+        return mIsFavourite;
+    }
+
+
 
     public Item(String id, String weinname, String jahrgang, String land, String preis, String geschmack, String art, String laden, String servierVorschlag, String content, String img, int mIsFavourite) {
         this.id = id;
